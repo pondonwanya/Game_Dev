@@ -37,6 +37,7 @@ void player::updateHpBar()
 		hp = 0;
 	}
 	rectHp.setSize(sf::Vector2f(hp, rectHp.getSize().y));
+
 }
 
 void player::updateMovement()

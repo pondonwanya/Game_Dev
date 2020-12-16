@@ -29,5 +29,6 @@ public:
 	void updateMovement();
 	void updateMovement2();
 	void updateMovement3();
+	void updateMovement4();
 };
 

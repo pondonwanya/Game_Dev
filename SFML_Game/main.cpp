@@ -1,10 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <stdio.h>
 #include <string>
 #include <SFML/Audio.hpp>
-
 
 #include "entity.h"
 #include "Projectile.h"
@@ -20,9 +20,15 @@
 #include "MainMenu.h"
 #include "Header.h"
 
+bool press;
+string name1;
+ifstream loadFile;
+void score();
+
 int main()
 
 {
+	int hightScore[5];
 	// random part
 	srand(time(NULL));
 
@@ -30,8 +36,10 @@ int main()
 	sf::Clock clock;
 	sf::Clock clock2;
 	sf::Clock clock3;
+	sf::String name;
 	float playerMovementSpeed = 1.5;
-	float playerMovementSpeed2 = 2;
+	float playerMovementSpeed2 = 2; 
+	float playerMovementSpeed3 = 3;
 	bool faceRight = 1;
 	bool hpAlive = true;
 	int counterRunning = 0;
@@ -39,12 +47,15 @@ int main()
 	int counter1 = 0;
 	int counter2 = 0;
 
-	bool userName = true;
-	bool textbox = true;
+
+	bool userName = false;
+	bool MyScore = false;
+	bool totalscore = false;
 	bool mainmenu = true;
-	bool state1 = true;
-	bool state2 = true;
-	bool state3 = true;
+	bool state1 = false;
+	bool state2 = false;
+	bool state3 = false;
+	bool lead = false;
 
 	sf::RenderWindow window;
 
@@ -76,7 +87,7 @@ int main()
 	user.loadFromFile("png/user.png");
 	sf::Sprite bguser;
 	bguser.setTexture(user);
-	bguser.setPosition(150, 100);
+	bguser.setPosition(10, 4);
 
 	sf::Font arial;
 	arial.loadFromFile("arial/arial.ttf");
@@ -171,6 +182,8 @@ int main()
 	sf::Sound soundhurt;
 	soundhurt.setBuffer(hurt);
 
+	vector<int> scoreboard;
+
 	// class Object
 	class player Player1;
 	Player1.sprite.setTexture(&Sprite);
@@ -244,7 +257,7 @@ int main()
 	enemyArrey2.push_back(enemy2);
 	enemy2.rect.setPosition(805, -400);
 	enemyArrey2.push_back(enemy2);
-	enemy2.rect.setPosition(2200, 610);
+	enemy2.rect.setPosition(900, 610);
 	enemyArrey2.push_back(enemy2);
 	enemy2.rect.setPosition(-1000, 620);
 	enemyArrey2.push_back(enemy2);
@@ -336,6 +349,134 @@ int main()
 	enemyArrey3.push_back(enemy3);
 	enemy3.rect.setPosition(805, -4);
 	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(810, 610);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 620);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(820, -1);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-10, 800);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(815, -300);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(805, -400);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(810, 610);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 840);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(820, -1);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 900);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(815, -300);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(1200, -400);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(810, 610);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 620);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(820, -1);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-10, 900);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(920, -300);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(805, -400);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 620);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(800, -100);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-1000, 100);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(815, -70);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(2600, -800);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-400, 620);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(1200, -300);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-4000, 100);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(1600, -500);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(2300, -400);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(910, 800);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 820);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(900, -900);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 950);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(2100, -700);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(855, -400);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(810, 610);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-1, 620);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(820, -1);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-10, 100);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(815, -3);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(805, -4);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(810, 610);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-1, 620);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(820, -1);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-10, 100);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(815, -3);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(805, -4);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(810, 610);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-1, 620);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(820, -1);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-10, 100);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(815, -3);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(805, -4);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(810, 610);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 620);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(820, -1);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-10, 900);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(815, -300);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(805, -400);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(810, 610);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 900);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(820, -1);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(-100, 900);
+	enemyArrey3.push_back(enemy3);
+	enemy3.rect.setPosition(815, -300);
+	enemyArrey3.push_back(enemy3);
+
+
 
 	//Text Vector Arrey
 	vector<textDisplay>::const_iterator iter8;
@@ -421,6 +562,9 @@ int main()
 	sf::Text mainMenu1;
 	sf::Text mainMenu2;
 	sf::Text mainMenu3;
+	sf::Text Name;
+	sf::Text Score;
+	//sf::Text Name;
 
 	sf::Font font1;
 	font1.loadFromFile("arial/arial.ttf");
@@ -446,9 +590,36 @@ int main()
 	mainMenu3.setCharacterSize(40);
 	mainMenu3.setPosition(200, 290);
 
+	Name.setFont(font1);
+	Name.setFillColor(sf::Color::Black);
+	Name.setString("Onwanya Ardsana : 63011060");
+	Name.setCharacterSize(15);
+	Name.setPosition(600, 0);
+
+	Score.setFont(font1);
+	Score.setFillColor(sf::Color::Black);
+	Score.setString("Score : "+ Player1.gil1);
+	Score.setCharacterSize(30);
+	Score.setPosition(300, 300);
+
 	int select = 0;
 
 	int eieieieieieie = 0;
+
+	ifstream loadFile;
+	string hightName[5];
+
+	sf::String playerName;
+	string playernaming;
+
+	sf::Text Text;
+	Text.setFont(font1);
+	Text.setCharacterSize(28);
+	Text.setFillColor(sf::Color::Black);
+	Text.setPosition(100, 100);
+
+
+
 
 	//Main Loop:
 	while (window.isOpen())
@@ -461,6 +632,17 @@ int main()
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && select == 0) {
 				mainmenu = false;
+				userName = true;
+
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && select == 1) {
+				mainmenu = false;
+				lead = true;
+
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) && select == 2) {
+				window.close();
 
 			}
 
@@ -512,12 +694,10 @@ int main()
 			window.draw(mainMenu1);
 			window.draw(mainMenu3);
 			window.draw(mainMenu2);
+			window.draw(Name);
 			window.display();
 			window.clear();
 		}
-
-		window.clear();
-
 
 		while (userName)
 		{
@@ -526,6 +706,7 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				userName = false;
+				state1 = true;
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 			{
@@ -536,6 +717,7 @@ int main()
 				textbox1.setSelected(false);
 			}
 
+
 			//Event Loop:
 			while (window.pollEvent(Event))
 			{
@@ -544,16 +726,42 @@ int main()
 				{
 				case sf::Event::Closed:
 					window.close();
-				case sf::Event::TextEntered:
-					textbox1.typedOn(Event);
+				//case sf::Event::TextEntered:
+					//textbox1.typedOn(Event);
+
 				}
 
+				if (Event.type == sf::Event::TextEntered)
+				{
+					if (Event.text.unicode < 128)
+					{
+						if (Event.text.unicode == static_cast <sf::Uint32>(8) && playerName.getSize() > 0)
+						{
+							playerName.erase(playerName.getSize() - 1);
+						}
+						else
+						{
+							if (playerName.getSize() < 100 && Event.text.unicode != 13)
+							{
+								if (Event.text.unicode == 32)
+								{
+									Event.text.unicode = 95;
+								}
+								playerName += Event.text.unicode;
+							}
+						}
+					}
+				}
+				Text.setString(playerName);
+				
 
 				window.clear();
 				window.draw(bgButton);
 				window.draw(bguser);
-				window.draw(text2);
-				textbox1.drawTo(window);
+				window.draw(Text);
+
+				//window.draw(text2);
+				//textbox1.drawTo(window);
 				window.display();
 			}
 		}
@@ -569,7 +777,7 @@ int main()
 
 			r = rand() % 4;
 
-			cout << "r = " << r << endl;
+			//cout << "r = " << r << endl;
 			// Clock
 			sf::Time elapsed1 = clock.getElapsedTime();
 			sf::Time elapsed2 = clock.getElapsedTime();
@@ -619,9 +827,10 @@ int main()
 			counter = 0;
 			if (Player1.rect.getGlobalBounds().intersects(warpArrey[counter].rect.getGlobalBounds()))
 			{
-				if (Player1.gil1 == 27) {
-					warpArrey[counter].isDoor = true;
+				if (Player1.gil1 >= 27) {
 					state1 = false;
+					state2 = true;
+					warpArrey[counter].isDoor = true;
 					background2.rect.setPosition(sf::Vector2f(1000, 2000));
 					background2.sprite.setPosition(sf::Vector2f(1000, 2000));
 					Player1.rect.setPosition(sf::Vector2f(100, 280));
@@ -649,7 +858,13 @@ int main()
 						Player1.hp -= enemyArrey[counter].attactDamage;
 						Player1.updateHpBar();
 
+						if (Player1.hp == 0)
+						{
+							state1 = false;
+							totalscore = true;
+						}
 					}
+
 					counter++;
 				}
 			}
@@ -800,7 +1015,7 @@ int main()
 			{
 				if (pickUpArrey[counter].destroy == true)
 				{
-					cout << "Chon" << endl;
+					//cout << "Chon" << endl;
 					pickUpArrey.erase(iter11);
 					break;
 				}
@@ -958,7 +1173,7 @@ int main()
 
 			r = rand() % 4;
 
-			cout << "r = " << r << endl;
+			//cout << "r = " << r << endl;
 			// Clock
 			sf::Time elapsed1 = clock.getElapsedTime();
 			sf::Time elapsed2 = clock.getElapsedTime();
@@ -982,17 +1197,38 @@ int main()
 				counter++;
 			}
 
+			//Player collides with Pickup Item Potion
+
+			counter = 0;
+			for (iter9 = pickUpArrey3.begin(); iter9 != pickUpArrey3.end(); iter9++)
+			{
+				if (Player1.rect.getGlobalBounds().intersects(pickUpArrey3[counter].rect.getGlobalBounds()))
+				{
+
+					if (pickUpArrey3[counter].isChest == true)
+					{
+						sounddrink.play();
+						Player1.update1();
+					}
+					pickUpArrey3[counter].destroy3 = true;
+				}
+
+				counter++;
+			}
+
 
 			//Player collides with door
 			counter = 0;
 			if (Player1.rect.getGlobalBounds().intersects(warpArrey[counter].rect.getGlobalBounds()))
 			{
-				warpArrey[counter].isDoor = true;
-				state2 = false;
-				background3.rect.setPosition(sf::Vector2f(1000, 2000));
-				background3.sprite.setPosition(sf::Vector2f(1000, 2000));
-				Player1.rect.setPosition(sf::Vector2f(100, 280));
-
+				if (Player1.gil1 >= 128) {
+					warpArrey[counter].isDoor = true;
+					state2 = false;
+					state3 = true;
+					background3.rect.setPosition(sf::Vector2f(1000, 2000));
+					background3.sprite.setPosition(sf::Vector2f(1000, 2000));
+					Player1.rect.setPosition(sf::Vector2f(100, 280));
+				}
 
 			}
 			counter++;
@@ -1010,6 +1246,7 @@ int main()
 				{
 					if (Player1.rect.getGlobalBounds().intersects(enemyArrey2[counter].rect.getGlobalBounds()))
 					{
+						soundhurt.play();
 						//Text Display
 						printf("Attack\n");
 						textDisplay1.text.setString(to_string(enemyArrey2[counter].attactDamage));
@@ -1019,11 +1256,18 @@ int main()
 						Player1.hp -= enemyArrey2[counter].attactDamage;
 						Player1.updateHpBar();
 
+						if (Player1.hp == 0)
+						{
+							state2 = false;
+							state3 = false;
+							totalscore = true;
+						}
+
 					}
 					counter++;
 				}
 			}
-			cout << Player1.hp << endl;
+			//cout << Player1.hp << endl;
 
 			//Projectile Collides with Enemy
 			counter = 0;
@@ -1062,7 +1306,7 @@ int main()
 			{
 				if (enemyArrey2[counter].alive == false)
 				{
-					cout << "Dead" << endl;
+					//cout << "Dead" << endl;
 
 					// Drop Potion
 					if (generateRandom(4) == 1)
@@ -1108,7 +1352,7 @@ int main()
 			{
 				if (pickUpArrey[counter].destroy == true)
 				{
-					cout << "Chon" << endl;
+					//cout << "Chon" << endl;
 					pickUpArrey.erase(iter11);
 					break;
 				}
@@ -1153,6 +1397,19 @@ int main()
 				counter++;
 			}
 
+			if (Player1.gil1 >= 140) {
+				//Draw Pickup Items
+				counter = 0;
+				for (iter10 = pickUpArrey2.begin(); iter10 != pickUpArrey2.end(); iter10++)
+				{
+					pickUpArrey2[counter].update();
+					//window.draw(pickUpArrey[counter].rect);
+					window.draw(pickUpArrey2[counter].sprite);
+
+					counter++;
+				}
+			}
+
 			//Draw Projectiles
 			counter = 0;
 			for (iter = projectileArrey.begin(); iter != projectileArrey.end(); iter++)
@@ -1194,6 +1451,8 @@ int main()
 
 				counter++;
 			}
+
+			window.draw(blood);
 
 			//Update doorwarp
 			warp1.update();
@@ -1289,20 +1548,6 @@ int main()
 				counter++;
 			}
 
-			//Player collides with door
-			counter = 0;
-			if (Player1.rect.getGlobalBounds().intersects(warpArrey[counter].rect.getGlobalBounds()))
-			{
-				if (Player1.gil1 == 27) {
-					warpArrey[counter].isDoor = true;
-					state1 = false;
-					background2.rect.setPosition(sf::Vector2f(1000, 2000));
-					background2.sprite.setPosition(sf::Vector2f(1000, 2000));
-					Player1.rect.setPosition(sf::Vector2f(100, 280));
-
-				}
-			}
-			counter++;
 
 			if (elapsed2.asSeconds() >= 0.1)
 			{
@@ -1323,13 +1568,19 @@ int main()
 						Player1.hp -= enemyArrey3[counter].attactDamage;
 						Player1.updateHpBar();
 
+						if (Player1.hp == 0)
+						{
+							state3 = false;
+							totalscore = true;
+						}
+
 					}
 					counter++;
 				}
 			}
 
 			//Fires Missle (Space Bar)
-			if (elapsed1.asSeconds() >= 0.0)
+			if (elapsed1.asSeconds() >= 0.1)
 			{
 				clock.restart();
 
@@ -1357,6 +1608,7 @@ int main()
 				}
 			}
 
+
 			//Projectile Collides with Enemy
 			counter = 0;
 			for (iter = projectileArrey.begin(); iter != projectileArrey.end(); iter++)
@@ -1369,7 +1621,7 @@ int main()
 						projectileArrey[counter].destroy = true;
 						Player1.gil1 += enemyArrey3[counter2].enemyValue;  // ยิงแล้วคะแนนเพิ่ม
 
-						//Text Display
+						//Text Displayssa
 						textDisplay1.text.setString(to_string(projectileArrey[counter].attactDamage));
 						textDisplay1.text.setPosition(enemyArrey3[counter2].rect.getPosition().x, enemyArrey3 [counter2].rect.getPosition().y);
 						textDisplayArrey.push_back(textDisplay1);
@@ -1379,7 +1631,7 @@ int main()
 						if (enemyArrey3[counter2].hp <= 0)
 						{
 							enemyArrey3[counter2].alive = false;
-						}
+						}                          
 					}
 
 					counter2++;
@@ -1451,7 +1703,18 @@ int main()
 					}
 
 					enemyArrey3.erase(iter6);
+					if (enemyArrey3.size() == 0) {
+
+	
+							ofstream highscore;
+							highscore.open("HS.txt", ios::out | ios::app);
+							highscore << "\n"  << Player1.gil1;
+							highscore.close();
+						state3 = false;
+						totalscore = true;
+					}
 					break;
+
 				}
 				counter++;
 			}
@@ -1542,19 +1805,6 @@ int main()
 
 
 
-			//if (Player1.gil1 == 27) {
-			//	//Draw Pickup Items
-			//	counter = 0;
-			//	for (iter10 = pickUpArrey2.begin(); iter10 != pickUpArrey2.end(); iter10++)
-			//	{
-			//		pickUpArrey2[counter].update();
-			//		//window.draw(pickUpArrey[counter].rect);
-			//		window.draw(pickUpArrey2[counter].sprite);
-
-			//		counter++;
-			//	}
-			//}
-
 			//Draw Projectiles
 			counter = 0;
 			for (iter = projectileArrey.begin(); iter != projectileArrey.end(); iter++)
@@ -1572,19 +1822,19 @@ int main()
 				int counterRunning = 0;
 				if (enemyArrey3[counter].rect.getPosition().x > Player1.rect.getPosition().x)   // Left
 				{
-					enemyArrey3[counter].rect.move(-playerMovementSpeed, 0);
+					enemyArrey3[counter].rect.move(-playerMovementSpeed3, 0);
 				}
 				if (enemyArrey3[counter].rect.getPosition().x < Player1.rect.getPosition().x)    // Right
 				{
-					enemyArrey3[counter].rect.move(playerMovementSpeed, 0);
+					enemyArrey3[counter].rect.move(playerMovementSpeed3, 0);
 				}
 				if (enemyArrey3[counter].rect.getPosition().y > Player1.rect.getPosition().y)    // Up
 				{
-					enemyArrey3[counter].rect.move(0, -playerMovementSpeed);
+					enemyArrey3[counter].rect.move(0, -playerMovementSpeed3);
 				}
 				if (enemyArrey3[counter].rect.getPosition().y < Player1.rect.getPosition().y)    // Down
 				{
-					enemyArrey3[counter].rect.move(0, playerMovementSpeed);
+					enemyArrey3[counter].rect.move(0, playerMovementSpeed3);
 				}
 
 				enemyArrey3[counter].update();
@@ -1597,12 +1847,8 @@ int main()
 				counter++;
 			}
 
-			//Update doorwarp
-			warp1.update();
 
-			//Draw doorwarp
-			window.draw(warp1.rect);
-			window.draw(warp1.sprite);
+			window.draw(blood);
 
 			//Update Player
 			Player1.update();
@@ -1635,6 +1881,260 @@ int main()
 			window.display();
 		}
 
-		window.clear();    
+		window.clear();  
+
+		while (totalscore)
+		{
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+			{
+				totalscore = false;
+				MyScore = true;
+			}
+
+			text1.setString("Score   " + to_string(Player1.gil1));
+			text1.setPosition(300, 300);
+
+
+			window.draw(bgButton);
+			window.draw(text2);
+			window.draw(text1);
+			window.display();
+			window.clear();
+		}
+
+		while (MyScore)
+		{
+			ifstream readScore,readnameFile;
+			
+			string nubScore,nubName;
+			int i=0,chang=0,chang1=0;
+			readScore.open("HS.txt");
+			if (readScore.is_open() == 1)
+			{
+				while (getline(readScore, nubScore) && i < 5)
+				{
+					hightScore[i] = stoi(nubScore);
+					i++;
+				}
+				
+			}
+
+			readScore.close();
+
+
+			
+			//write score
+			ofstream writeScore;
+			writeScore.open("HS.txt");
+			if (writeScore.is_open())
+			{
+				for (i = 0; i < 5; i++)
+				{
+					if (Player1.gil1 > hightScore[i])
+					{
+						for (int j = 4; j > i; j--)
+						{
+							hightScore[j] = hightScore[j - 1];
+						}
+						chang = 1;
+						chang1 = i;
+						hightScore[i] = Player1.gil1;
+						break;
+					}
+				}
+				for (int j = 0; j < 5; j++)
+				{
+					writeScore << hightScore[j] << endl;
+				}
+			}
+			writeScore.close();
+			//read name
+			i = 0;
+			readnameFile.open("playername.txt");
+			if (readnameFile.is_open() == 1)
+			{
+				while (getline(readnameFile, nubName) && i < 5)
+				{
+					hightName[i] = nubName;
+					i++;
+				}
+			}
+			readnameFile.close();
+			
+
+			//write name
+			ofstream writenameFile;
+			writenameFile.open("NM.txt");
+			if (writenameFile.is_open() == 1)
+			{
+				for (int i = 0; i < 5; i++)
+				{
+					if (chang == 1)
+					{
+						chang = 0;
+						//chang1 = i;
+						for (int j = 4; j > i; j--)
+						{
+							hightName[j] = hightName[j - 1];
+						}
+						hightName[chang1] = playerName;
+						
+						break;
+					}
+				}
+				for (int j = 0; j < 5; j++)
+				{
+					writenameFile << hightName[j] << endl;
+				}
+			}
+			writenameFile.close();
+
+
+
+
+			MyScore = false;
+			mainmenu = true;
+			
+			window.draw(bgButton);
+			window.draw(text2);
+			window.draw(text1);
+			window.display();
+			window.clear();
+			
+		}
+
+		while (lead)
+		{
+			ostringstream sctostring;
+			sctostring << Player1.gil1;
+			sf::Text lblNamePlayer, lblScorePlayer, Scorelbl[5], Namelbl[5];
+			sf::Text textL;
+			string gameover = "LEADERBOARD";
+			textL.setString(gameover);
+			textL.setFont(font1);
+			textL.setCharacterSize(40);
+			textL.setPosition((window.getPosition().x / 2) + 200, window.getPosition().y / 2 - 50);
+			textL.setFillColor(sf::Color::White);
+
+			ostringstream arragesc[6];
+
+			for (int i = 0; i < 5; i++)
+			{
+				arragesc[i] << hightScore[i];
+			}
+			for (int i = 0; i < 5; i++)
+			{
+				Scorelbl[i].setFont(font1);
+				Scorelbl[i].setCharacterSize(50);
+				Scorelbl[i].setFillColor(sf::Color::White);
+				Scorelbl[i].setString(arragesc[i].str());
+				Namelbl[i].setFont(font1);
+				Namelbl[i].setCharacterSize(50);
+				Namelbl[i].setFillColor(sf::Color::White);
+				Namelbl[i].setString(hightName[i]);
+			}
+			Scorelbl[0].setPosition(718, 188);
+			Scorelbl[1].setPosition(718, 275);
+			Scorelbl[2].setPosition(718, 356);
+			Scorelbl[3].setPosition(718, 440);
+			Scorelbl[4].setPosition(718, 524);
+			Namelbl[0].setPosition(262, 188);
+			Namelbl[1].setPosition(262, 275);
+			Namelbl[2].setPosition(262, 356);
+			Namelbl[3].setPosition(262, 440);
+			Namelbl[4].setPosition(262, 524);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				lead = 0;
+				mainmenu = 1;
+			}
+				
+				window.clear();
+				window.draw(textL);
+
+				for (int i = 0; i < 5; i++)
+				{
+					window.draw(Scorelbl[i]);
+					window.draw(Namelbl[i]);
+				}
+				window.display();
+			
+		}
 	}
 }    
+//void score() {
+//
+//	vector<pair<int, string>> scoreboard;
+//
+//
+//	press = false;
+//
+//	scoreboard.clear(); //เคลียร์จอ
+//
+//	loadFile.open("HS.txt");
+//	while (!loadFile.eof()) {
+//		string tempName;
+//		int tempScore;
+//		loadFile >> tempName >> tempScore;
+//		scoreboard.push_back({ tempScore,tempName });
+//	}
+//	loadFile.close();
+//
+//	sort(scoreboard.begin(), scoreboard.end(), greater<pair<int, string>>());
+//
+//	while (window.isOpen())
+//	{
+//		int cnt = 0;
+//		sf::Event event;
+//
+//		while (window.pollEvent(event))
+//		{
+//			if (event.type == sf::Event::Closed)
+//			{
+//				window.close();
+//			}
+//
+//			if (event.type == sf::Event::KeyReleased)
+//			{
+//				press = true;
+//			}
+//		}
+//
+//		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) && press)
+//		{
+//			press = false;
+//			chan.play();
+//			goto Main;
+//		}
+//
+//		window.clear(sf::Color(76, 76, 76));
+//
+//		window.draw(mt[8]);
+//
+//		for (vector<pair<int, string>>::iterator k = scoreboard.begin(); k != scoreboard.end(); ++k)
+//		{
+//			++cnt;
+//			if (cnt > 5)
+//				break;
+//
+//			sf::Text hname, hscore;
+//			hscore.setString(to_string(k->first));
+//			hscore.setFont(font);
+//			hscore.setCharacterSize(40);
+//			hscore.setPosition(1200, 300 + (80 * cnt));
+//			hscore.setFillColor(sf::Color::Black);
+//			window.draw(hscore);
+//			hname.setString(k->second);
+//			hname.setFont(font);
+//			hname.setCharacterSize(40);
+//			hname.setPosition(600, 300 + (80 * cnt));
+//			hname.setFillColor(sf::Color::Black);
+//			window.draw(hname);
+//		}
+//
+//		window.draw(myname);
+//
+//		window.display();
+//	}
+//}
